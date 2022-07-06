@@ -1,4 +1,3 @@
-import 'package:crappy_steam/DELETAMI.dart';
 import 'package:crappy_steam/crappy_steam.dart' as crappy_steam;
 import 'dart:io';
 
