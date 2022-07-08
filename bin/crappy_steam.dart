@@ -8,6 +8,7 @@ const String version = "0.1";
 void main(List<String> arguments) {
   int x = 6;
   print(x);
+  TEST SE FUNZIONA IL BADGE DI GITHUB. Dovrebbe fallire. 
 
   Account a = Account(3);
   print("1 ID di a = ${a.id}");
