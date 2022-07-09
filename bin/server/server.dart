@@ -18,9 +18,9 @@ Response _rootHandler(Request req) {
 Response _jsonSimpledata(Request request){
 
   final simpleData = {
-    "Name" : "Test",
-    "Age" : 20,
-    "IsSimple" : true
+    "Name" : "Gennaro",
+    "Surname" : "Fiore",
+    "age" : 900
   };
 
   final jsonText = json.encode(simpleData);
