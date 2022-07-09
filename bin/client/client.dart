@@ -5,7 +5,7 @@ import '../server/person.dart';
 Future<void> main(List<String> arguments) async {
   final url = Uri.parse('http://lin.java-injection.dev/test');
 
-  //Crea la  richiesta http all'url
+  //Crea la richiesta http all'url
   final res = await http.get(url);
 
   print("res: ${res.body}");
