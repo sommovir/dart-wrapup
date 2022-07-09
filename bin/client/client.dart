@@ -7,7 +7,7 @@ Future<void> main(List<String> arguments) async {
 
   final url = Uri.parse('http://localhost:8080/json_simple');
 
-  //Crea la richiesta http a l'url
+  //Crea la richiesta http all'url
   final res = await http.get(url);
 
   //var people = [];
@@ -20,7 +20,7 @@ Future<void> main(List<String> arguments) async {
   //   people.add(Person.fromJson(p));
   // }
 
-  print(personsJson);
+  print('STATUS CODE => ${res.statusCode}\n $personsJson');
 
 
 
