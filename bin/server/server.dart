@@ -28,8 +28,9 @@ Response _jsonSimpledata(Request request){
 }
 
 Response _jsonFromClass(Request req){
-  var p = Person("Bruh", "lmao", 90);
-  final jsonText = jsonEncode({'TEST' : p},
+  var p1 = Person("Bruh", "lmao", 90);
+  var p2 = Person("Fiorella", "Donato", 123);
+  final jsonText = jsonEncode({'Persona1' : p1, 'Persona2' : p2},
     toEncodable: (Object? value) => value is Person ? Person.toJson(value) : throw UnsupportedError("bro non va")
   );
   return Response.ok(jsonText);
