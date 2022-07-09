@@ -5,7 +5,7 @@ import '../server/person.dart';
 Future<void> main(List<String> arguments) async {
 
 
-  final url = Uri.parse('http://localhost:8080/json_simple');
+  final url = Uri.parse('http://localhost:8080/json_complex');
 
   //Crea la richiesta http all'url
   final res = await http.get(url);

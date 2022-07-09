@@ -32,7 +32,6 @@ Response _jsonFromClass(Request req){
   final jsonText = jsonEncode({'TEST' : p},
     toEncodable: (Object? value) => value is Person ? Person.toJson(value) : throw UnsupportedError("bro non va")
   );
-  print(jsonText);
   return Response.ok(jsonText);
 }
 
