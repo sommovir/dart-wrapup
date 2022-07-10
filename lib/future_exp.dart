@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'ConsoleColors.dart';
+
 bool connected = false;
 void main() async {
   print("ciao");
@@ -21,7 +23,7 @@ void main() async {
     queryDB().then((value) => print(value));
   });
   log().then((value) {
-    print("LOG finito");
+    print(value);
     analyze().then((value) => print("il void me lo do in faccia"));
   }); //CALLBACK
 }
@@ -39,7 +41,7 @@ Future<String> log() async {
   print("logging.. ");
   return Future.delayed(
     Duration(seconds: 5),
-    () => "Log Completato",
+    () => "Log Completato${ConsoleColors.GREEN.code} SUCCESS ${ConsoleColors.RESET.code}",
   );
 }
 
