@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -53,7 +54,7 @@ void main(List<String> args) async {
 
   final port = 8080;
   final server = await serve(handler, ip, port);
-  print('Server listening http://${server.address.host}:${server.port}');
+  print('Server listening at http://${server.address.host}:${server.port}');
 }
 
 
