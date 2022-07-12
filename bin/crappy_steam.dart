@@ -3,7 +3,7 @@ import 'package:crappy_steam/future_exp.dart';
 import 'package:crappy_steam/crappy_steam.dart' as crappy_steam;
 import 'dart:io';
 
-import 'package:crappy_steam/logic/dbManager.dart';
+import 'package:crappy_steam/logic/DBManager.dart';
 
 const String version = "0.1";
 

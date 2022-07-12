@@ -1,6 +1,6 @@
 import 'package:crappy_steam/exceptions/UsernameExistingException.dart';
 import 'package:crappy_steam/logic/Account.dart';
-import 'package:crappy_steam/logic/dbManager.dart';
+import 'package:crappy_steam/logic/DBManager.dart';
 import 'package:test/test.dart';
 
 void main() {
