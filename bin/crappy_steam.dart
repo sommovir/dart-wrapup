@@ -6,14 +6,6 @@ import 'dart:io';
 const String version = "0.1";
 
 void main(List<String> arguments) {
-  int x = 6;
-  print(x); 
-
-  Account a = Account(3);
-  print("1 ID di a = ${a.id}");
-  a.reset();
-  print("2 ID di a = ${a.id}");
-
   print("======== Welcome to Crappy Steam =========");
   print("                  v.$version");
   print("==========================================");
@@ -28,15 +20,16 @@ void main(List<String> arguments) {
   }
 }
 
-extension RESET on Account {
-  void reset() {
-    id = -1;
-  }
-}
 
-extension SUM on int {
-  int sum(int b) {
-    int a = this + b;
-    return a;
-  }
-}
+// extension RESET on Account {
+//   void reset() {
+//     id = -1;
+//   }
+// }
+
+// extension SUM on int {
+//   int sum(int b) {
+//     int a = this + b;
+//     return a;
+//   }
+// }
