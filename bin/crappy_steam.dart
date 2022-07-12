@@ -17,7 +17,15 @@ void main(List<String> arguments) {
 
     String? line = stdin.readLineSync();
 
-    if (line == "cs --version") {
+    if (line == "1") {
+      try {
+        registration();
+      } catch (e) {
+        print("[ERROR] $e");
+      }
+    } else if (line == "2") {
+      login();
+    } else if (line == "cs --version") {
       print("\tCrappy Steam v.$version");
     } else if (line == "status") {
       DBManager.getInstance()!.printStatus();
@@ -37,6 +45,36 @@ void mainMenu() {
   print(" digita 'quit' per terminare il programma");
   print("-------------------------------------------------");
 }
+
+void registration() {
+  print("Inserire username: ");
+  String? username = stdin.readLineSync();
+  final RegExp regex = RegExp("[A-Za-z0-9]+");
+  if (!regex.hasMatch(username!)) {
+    throw Exception("Username non valido");
+  }
+  if (DBManager.getInstance()!.userNameExisting(username)) {
+    throw Exception(
+        "username $username già esistente, selezionare un diverso nome utente");
+  }
+
+  print("[INFO] username valido");
+  print("[INFO] inserire una password:");
+  String? pass = stdin.readLineSync();
+  final RegExp regexPassword = RegExp("[0-9]+");
+  if (!regexPassword.hasMatch(pass!)) {
+    throw Exception("password non valida");
+  }
+  print("[INFO] inserire nuovamente la password:");
+  String? pass2 = stdin.readLineSync();
+  if (pass != pass2) {
+    throw Exception("la password inserita non è uguale alla precedente");
+  }
+  DBManager.getInstance()!.register(username, pass);
+  print("[INFO] i dati inseriti sono corretti!");
+}
+
+void login() {}
 
 
 // extension RESET on Account {
