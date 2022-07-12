@@ -1,9 +1,11 @@
+import 'package:crappy_steam/Game.dart';
 import 'package:crappy_steam/logic/Account.dart';
 import 'package:crappy_steam/future_exp.dart';
 import 'package:crappy_steam/crappy_steam.dart' as crappy_steam;
 import 'dart:io';
 
 import 'package:crappy_steam/logic/DBManager.dart';
+import 'package:crappy_steam/logic/GameManager.dart';
 
 const String version = "0.1";
 bool logged = false;
@@ -49,6 +51,17 @@ void mainMenu() {
 
 void startGame() {
   print("Il gioco inizierà tra poco");
+
+  for (Game? game in GameManager.getInstance()!.getGames()) {
+    print(
+        "Gioco n. ${game?.getId()} con nome: ${game?.getName()} con costo di ${game?.getPrice()}");
+  }
+  print("Selezionare il gioco:");
+  String? line = stdin.readLineSync();
+
+  if (line == "quit") {
+    print("[INFO] bye.");
+  }
 }
 
 void registration() {
