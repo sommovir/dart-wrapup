@@ -18,7 +18,7 @@ void main(List<String> arguments) {
   while (!logged) {
     mainMenu();
 
-    String? line = stdin.readLineSync();
+    String line = stdin.readLineSync() ?? "";
 
     if (line == "1") {
       try {
@@ -32,7 +32,8 @@ void main(List<String> arguments) {
       print("\tCrappy Steam v.$version");
     } else if (line == "status") {
       DBManager.getInstance()!.printStatus();
-    } else if (line == "quit") {
+    }
+    else if (line == "quit") {
       print("[INFO] bye.");
       break;
     } else {
@@ -40,6 +41,10 @@ void main(List<String> arguments) {
     }
   }
   print("programma terminato.. ");
+}
+
+void addGame(int id) {
+
 }
 
 void mainMenu() {
@@ -64,23 +69,53 @@ void startGame(String username) {
     print(
         "Gioco n. ${game?.getId()} con nome: ${game?.getName()} con costo di ${game?.getPrice()} con multiplayer: ${game?.multiplayer}");
   }
-  print("Selezionare il gioco:");
-  String? line = stdin.readLineSync();
 
-  if (line == "1") {
-  } else if (line == "2") {
-  } else if (line == "3") {
-  } else if (line == "4") {
-  } else if (line == "5") {
-  } else if (line == "cs --version") {
-    print("\tCrappy Steam v.$version");
-  } else if (line == "status") {
-    DBManager.getInstance()!.printStatus();
-  } else if (line == "quit") {
-    print("[INFO] bye.");
-  } else {
-    print("comando sconosciuto");
+  print(" -- 1) SELEZIONA UN GIOCO");
+  print(" -- 2) AGGIUNGI UN GIOCO");
+  print(" --------------------------");
+
+  String line = stdin.readLineSync() ?? ""; 
+
+//non printa la lista non so why
+  if(line == "1"){
+    print("Seleziona uno di questi giochi: ");
+    for (Game? game in account.games) {
+      print("ID: ${game?.getId()} | Titolo: ${game?.getName()}");
+    }
+
+    String selectedId = stdin.readLineSync() ?? "";
+
+    
+
+    for (Game game in account.games) {
+      if(game.getId() == selectedId){
+        var index = account.games.indexOf(game);
+        account.setPlayedGame(account.games.elementAt(index));
+        print("Ok stai giocando a (ID: ${account.playedGame?.getId()} | Titolo: ${account.playedGame?.getName()}");
+      } else{
+        print("Nessun gioco trovato");
+      }
+      
+    }
+
   }
+
+  // String? line = stdin.readLineSync();
+
+  // if (line == "1") {
+  // } else if (line == "2") {
+  // } else if (line == "3") {
+  // } else if (line == "4") {
+  // } else if (line == "5") {
+  // } else if (line == "cs --version") {
+  //   print("\tCrappy Steam v.$version");
+  // } else if (line == "status") {
+  //   DBManager.getInstance()!.printStatus();
+  // } else if (line == "quit") {
+  //   print("[INFO] bye.");
+  // } else {
+  //   print("comando sconosciuto");
+  // }
 }
 
 void registration() {

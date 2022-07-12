@@ -6,6 +6,7 @@ class Account {
   final String _password;
   int _money = 100;
   List<Game> _games = [];
+  Game? playedGame;
 
   Account(this._id, this._username, this._password);
 
@@ -14,5 +15,6 @@ class Account {
   String get password => _password;
   int get money => _money;
   List<Game> get games => _games;
+  void setPlayedGame(Game game) => playedGame = game;
   //set id(int id) => _id = id;
 }
