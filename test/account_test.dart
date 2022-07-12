@@ -1,4 +1,4 @@
-import 'package:crappy_steam/Account.dart';
+import 'package:crappy_steam/logic/Account.dart';
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
 
