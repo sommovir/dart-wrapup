@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:crappy_steam/exceptions/PsswdWrong.dart';
+import 'package:crappy_steam/exceptions/UsernameNotExistingException.dart';
 import 'package:crappy_steam/logic/Account.dart';
 import 'package:crappy_steam/exceptions/UsernameExistingException.dart';
 import 'package:http/http.dart';
@@ -26,6 +28,15 @@ class DBManager {
     userTable[username] = account; //tradotto in java
     //userTable.put(username, account);
     print("[INFO] account: $account inserito correttamente");
+  }
+
+  void login(String username, String password) {
+    if (!userNameExisting(username)) {
+      throw UsernameNotExistingException("L'username non esiste");
+    }
+    if (!(userTable[username]?.password == password)) {
+      throw PsswdWrong("Password inserita incorretta");
+    }
   }
 
   Account? getAccountByUsername(String username) => userTable[username] ??=

@@ -6,13 +6,14 @@ import 'dart:io';
 import 'package:crappy_steam/logic/DBManager.dart';
 
 const String version = "0.1";
+bool logged = false;
 
 void main(List<String> arguments) {
   print("======== Welcome to Crappy Steam =========");
   print("                  v.$version");
   print("==========================================");
   print("");
-  while (true) {
+  while (!logged) {
     mainMenu();
 
     String? line = stdin.readLineSync();
@@ -46,6 +47,10 @@ void mainMenu() {
   print("-------------------------------------------------");
 }
 
+void startGame() {
+  print("Il gioco inizierà tra poco");
+}
+
 void registration() {
   print("Inserire username: ");
   String? username = stdin.readLineSync();
@@ -74,7 +79,30 @@ void registration() {
   print("[INFO] i dati inseriti sono corretti!");
 }
 
-void login() {}
+void login() {
+  print("Inserire username: ");
+  String? username = stdin.readLineSync();
+  final RegExp regex = RegExp("[A-Za-z0-9]+");
+  if (!regex.hasMatch(username!)) {
+    throw Exception("Username non valido");
+  }
+  if (!DBManager.getInstance()!.userNameExisting(username)) {
+    throw Exception(
+        "username $username non esistente, selezionare nome utente valido");
+  }
+
+  print("[INFO] username valido");
+  print("[INFO] inserire una password:");
+  String? pass = stdin.readLineSync();
+  final RegExp regexPassword = RegExp("[0-9]+");
+  if (!regexPassword.hasMatch(pass!)) {
+    throw Exception("password non valida");
+  }
+  DBManager.getInstance()?.login(username, pass);
+  print("[INFO] login eseguito correttamente");
+  logged = true;
+  startGame();
+}
 
 
 // extension RESET on Account {
