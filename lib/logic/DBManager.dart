@@ -30,13 +30,14 @@ class DBManager {
     print("[INFO] account: $account inserito correttamente");
   }
 
-  void login(String username, String password) {
+  String? login(String username, String password) {
     if (!userNameExisting(username)) {
       throw UsernameNotExistingException("L'username non esiste");
     }
     if (!(userTable[username]?.password == password)) {
       throw PsswdWrong("Password inserita incorretta");
     }
+    return username;
   }
 
   Account? getAccountByUsername(String username) => userTable[username] ??=

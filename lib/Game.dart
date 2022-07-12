@@ -4,8 +4,9 @@ class Game implements Purchasable {
   final int _price;
   final String _name;
   final String _id;
+  final bool _multiplayer;
 
-  Game(this._price, this._name, this._id);
+  Game(this._price, this._name, this._id, this._multiplayer);
 
   @override
   int getPrice() {
@@ -20,4 +21,6 @@ class Game implements Purchasable {
   String getId() {
     return _id;
   }
+
+  bool get multiplayer => _multiplayer;
 }

@@ -49,18 +49,37 @@ void mainMenu() {
   print("-------------------------------------------------");
 }
 
-void startGame() {
-  print("Il gioco inizierà tra poco");
+void startGame(String username) {
+  Account? account = DBManager.getInstance()?.userTable[username];
+  print("I soldi a tua disposizione sono: ${account?.money}");
+
+  print("Possiedi i seguenti giochi");
+
+  for (Game? game in account!.games) {
+    print(
+        "Gioco n. ${game?.getId()} con nome: ${game?.getName()} con costo di ${game?.getPrice()} con multiplayer: ${game?.multiplayer}");
+  }
 
   for (Game? game in GameManager.getInstance()!.getGames()) {
     print(
-        "Gioco n. ${game?.getId()} con nome: ${game?.getName()} con costo di ${game?.getPrice()}");
+        "Gioco n. ${game?.getId()} con nome: ${game?.getName()} con costo di ${game?.getPrice()} con multiplayer: ${game?.multiplayer}");
   }
   print("Selezionare il gioco:");
   String? line = stdin.readLineSync();
 
-  if (line == "quit") {
+  if (line == "1") {
+  } else if (line == "2") {
+  } else if (line == "3") {
+  } else if (line == "4") {
+  } else if (line == "5") {
+  } else if (line == "cs --version") {
+    print("\tCrappy Steam v.$version");
+  } else if (line == "status") {
+    DBManager.getInstance()!.printStatus();
+  } else if (line == "quit") {
     print("[INFO] bye.");
+  } else {
+    print("comando sconosciuto");
   }
 }
 
@@ -111,10 +130,10 @@ void login() {
   if (!regexPassword.hasMatch(pass!)) {
     throw Exception("password non valida");
   }
-  DBManager.getInstance()?.login(username, pass);
+  String? name = DBManager.getInstance()?.login(username, pass);
   print("[INFO] login eseguito correttamente");
   logged = true;
-  startGame();
+  startGame(name!);
 }
 
 
