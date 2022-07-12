@@ -22,7 +22,7 @@ class DBManager {
     if (userNameExisting(username)) {
       throw UsernameExistingException("L'username già esiste");
     }
-    Account account = Account(1); //TODO completare logica creazione account
+    Account account = Account(1, username, password);
     userTable[username] = account; //tradotto in java
     //userTable.put(username, account);
     print("[INFO] account: $account inserito correttamente");

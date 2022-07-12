@@ -4,6 +4,6 @@ import 'package:test/scaffolding.dart';
 
 void main() {
   test("[Account][testing getter id]", () {
-    expect(Account(33).id, 33);
+    expect(Account(33, "sss", "asaa").id, 33);
   });
 }
