@@ -12,17 +12,31 @@ import 'Account.dart';
 class DBManager {
   static DBManager? _instance; //sperando sia null
 
-  DBManager._(); //si è strano ma è un costruttore privato
+  DBManager._();  //si è strano ma è un costruttore privato
+
+  Future<void> init() async{
+    print("faccio la query al db..");
+    await HTTPManager.getInstance()!.getAccountFromServer().then(
+
+        (accounts) {
+          for (var p in accounts) {
+            userTable[p.username] = p;
+          }
+        }
+    );
+
+
+  }
+
   Map<String, Account> userTable = HashMap();
 
-  //PATTERN SINGLETON
-  static DBManager? getInstance() {
-    if (_instance == null) {
-      _instance = DBManager._(); //if _instance è nullo usa il costruttore priv.
-      HTTPManager.getInstance()?.getAccountFromServer();
-    }
-    return _instance;
+  int getAccountsSize(){
+    return userTable.length;
   }
+
+  //PATTERN SINGLETON
+  static DBManager? getInstance() =>
+    _instance ??= DBManager._(); //if _instance è nullo usa il costruttore priv.
 
   bool userNameExisting(String username) => userTable.containsKey(username);
 

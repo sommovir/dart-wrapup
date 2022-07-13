@@ -10,12 +10,12 @@ import 'package:crappy_steam/logic/DBManager.dart';
 const String version = "0.1";
 bool logged = false;
 
-void main(List<String> arguments) {
+void main(List<String> arguments) async{
   print("======== Welcome to Crappy Steam =========");
   print("                  v.$version");
   print("==========================================");
   print("");
-  DBManager.getInstance();
+  await DBManager.getInstance()!.init();
 
   while (!logged) {
     mainMenu();
@@ -34,7 +34,10 @@ void main(List<String> arguments) {
       print("\tCrappy Steam v.$version");
     } else if (line == "status") {
       DBManager.getInstance()!.printStatus();
-    } else if (line == "quit") {
+    }else if (line == "size") {
+      print("ci sono ${DBManager.getInstance()!.getAccountsSize()} utenti registrati ");
+    }
+    else if (line == "quit") {
       print("[INFO] bye.");
       break;
     } else {

@@ -15,26 +15,34 @@ class HTTPManager {
     return _instance;
   }
 
-  void getAccountFromServer() async {
-    print("Entra");
+  Future<List<Account>> getAccountFromServer() async {
+    //print("Entra");
     final url = Uri.parse('http://lin.java-injection.dev/test/accounts');
-    print("Entra2");
+    //print("Entra2");
 
     //Crea la richiesta http all'url
     final res = await http.get(url);
 
-    print("res: ${res.body}");
-    print("Qui");
+    //print("res: ${res.body}");
+    //print("Qui");
 
     //decodifica il body della response in formato json
     var accountJson = json.decode(res.body);
+    //print(accountJson.runtimeType);
 
+    print("[INFO] sono stati caricati: ${accountJson.length} accounts");
+    List<Account> accounts  = [];
     //per ogni elemento lo fetcha e lo aggiunge alla lista
+    /*
     for (var p in accountJson) {
       DBManager.getInstance()?.userTable[p.username] = Account.fromJson(p);
       print("Aggiungo");
+    }*/
+    for(var p in accountJson) {
+      accounts.add(Account.fromJson(p));
     }
 
-    print("LUNGOOOOOOOOOOOOOOOOO ${DBManager.getInstance()?.userTable.length}");
+    //print("LUNGOOOOOOOOOOOOOOOOO ${DBManager.getInstance()?.userTable.length}");
+    return accounts;
   }
 }
