@@ -15,6 +15,7 @@ void main(List<String> arguments) {
   print("                  v.$version");
   print("==========================================");
   print("");
+
   while (!logged) {
     mainMenu();
 
@@ -55,61 +56,73 @@ void startGame(String username) {
   Account? account = DBManager.getInstance()?.userTable[username];
   print("I soldi a tua disposizione sono: ${account?.money}");
 
-  print("Possiedi i seguenti giochi");
+  print("Possiedi i seguenti giochi: ");
 
   for (Game? game in account!.games) {
     print(
         "Gioco n. ${game?.getId()} con nome: ${game?.getName()} con costo di ${game?.getPrice()} con multiplayer: ${game?.multiplayer}");
   }
 
+  print("Giochi disponibili: ");
+
   for (Game? game in GameManager.getInstance()!.getGames()) {
     print(
         "Gioco n. ${game?.getId()} con nome: ${game?.getName()} con costo di ${game?.getPrice()} con multiplayer: ${game?.multiplayer}");
   }
 
-  print(" -- 1) SELEZIONA UN GIOCO");
-  print(" -- 2) AGGIUNGI UN GIOCO");
-  print(" --------------------------");
+  String line;
 
-  String line = stdin.readLineSync() ?? "";
-
+  do {
+    print(" RIMANGONO ${account.money} EURO");
+    print(" -- 1) SELEZIONA UN GIOCO");
+    print(" -- 2) AGGIUNGI UN GIOCO");
+    print(" -- quit) STOP");
+    print(" --------------------------");
+    line = stdin.readLineSync() ?? "";
 //non printa la lista non so why
-  if (line == "1") {
-    print("Seleziona uno di questi giochi: ");
-    for (Game? game in account.games) {
-      print("ID: ${game?.getId()} | Titolo: ${game?.getName()}");
-    }
+    if (line == "1") {
+      print("Seleziona uno di questi giochi: ");
+      for (Game? game in account.games) {
+        print("ID: ${game?.getId()} | Titolo: ${game?.getName()}");
+      }
 
-    String selectedId = stdin.readLineSync() ?? "";
-
-    for (Game game in account.games) {
-      if (game.getId() == selectedId) {
-        var index = account.games.indexOf(game);
-        account.setPlayedGame(account.games.elementAt(index));
-        print(
-            "Ok stai giocando a (ID: ${account.playedGame?.getId()} | Titolo: ${account.playedGame?.getName()}");
+      if (account.games.isNotEmpty) {
+        String selectedId = stdin.readLineSync() ?? "";
+        for (Game game in account.games) {
+          if (game.getId() == selectedId) {
+            var index = account.games.indexOf(game);
+            account.setPlayedGame(account.games.elementAt(index));
+            print(
+                "Ok stai giocando a (ID: ${account.playedGame?.getId()} | Titolo: ${account.playedGame?.getName()})");
+          }
+        }
       } else {
         print("Nessun gioco trovato");
       }
+    } else if (line == "2") {
+      print("Quale vuoi acquistare? ");
+      for (Game? game in GameManager.getInstance()!.getGames()) {
+        if (!account.games.contains(game)) {
+          print("ID: ${game?.getId()} | Titolo: ${game?.getName()}");
+        }
+      }
+      line = stdin.readLineSync() ?? "";
+
+      for (Game? game in GameManager.getInstance()!.getGames()) {
+        if (game?.getId() == line) {
+          var index = GameManager.getInstance()!.getGames().indexOf(game!);
+          Game x = GameManager.getInstance()!.getGames()[index];
+          account.buyGames(x.getPrice(), account, game);
+        }
+      }
+    } else if (line == "cs --version") {
+      print("\tCrappy Steam v.$version");
+    } else if (line == "status") {
+      DBManager.getInstance()!.printStatus();
+    } else {
+      print("comando sconosciuto");
     }
-  }
-
-  // String? line = stdin.readLineSync();
-
-  // if (line == "1") {
-  // } else if (line == "2") {
-  // } else if (line == "3") {
-  // } else if (line == "4") {
-  // } else if (line == "5") {
-  // } else if (line == "cs --version") {
-  //   print("\tCrappy Steam v.$version");
-  // } else if (line == "status") {
-  //   DBManager.getInstance()!.printStatus();
-  // } else if (line == "quit") {
-  //   print("[INFO] bye.");
-  // } else {
-  //   print("comando sconosciuto");
-  // }
+  } while (line != "quit");
 }
 
 void registration() {

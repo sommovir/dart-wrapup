@@ -17,5 +17,13 @@ class Account {
   List<Game> get games => _games;
   void setPlayedGame(Game game) => playedGame = game;
   //set id(int id) => _id = id;
-  void buyGames(int b) => _money -= b;
+  void buyGames(int b, Account account, Game game) {
+    if (_money - b > 0) {
+      _money -= b;
+      print("[INFO] GIOCO ACQUISTATO");
+      account.games.add(game);
+    } else {
+      print("[INFO] SALDO NON SUFFICIENTE");
+    }
+  }
 }
