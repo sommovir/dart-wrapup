@@ -1,4 +1,6 @@
-import 'package:crappy_steam/Game.dart';
+
+
+import '../Game.dart';
 
 class Account {
   final int _id;
@@ -7,6 +9,7 @@ class Account {
   int _money = 100;
   List<Game> _games = [];
   Game? playedGame;
+  
 
   Account(this._id, this._username, this._password);
 
@@ -17,4 +20,5 @@ class Account {
   List<Game> get games => _games;
   void setPlayedGame(Game game) => playedGame = game;
   //set id(int id) => _id = id;
+  void buyGames(int b) => _money -= b;
 }

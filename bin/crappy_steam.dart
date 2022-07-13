@@ -3,9 +3,9 @@ import 'package:crappy_steam/logic/Account.dart';
 import 'package:crappy_steam/future_exp.dart';
 import 'package:crappy_steam/crappy_steam.dart' as crappy_steam;
 import 'dart:io';
-
-import 'package:crappy_steam/logic/DBManager.dart';
 import 'package:crappy_steam/logic/GameManager.dart';
+
+import '../lib/logic/DBManager.dart';
 
 const String version = "0.1";
 bool logged = false;
