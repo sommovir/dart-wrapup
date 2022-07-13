@@ -1,8 +1,10 @@
 import 'dart:collection';
 
+import 'package:crappy_steam/Game.dart';
 import 'package:crappy_steam/exceptions/PsswdWrong.dart';
 import 'package:crappy_steam/exceptions/UsernameNotExistingException.dart';
 import 'package:crappy_steam/exceptions/UsernameExistingException.dart';
+import 'package:crappy_steam/logic/HTTPManager.dart';
 import 'package:http/http.dart';
 
 import 'Account.dart';
@@ -15,7 +17,10 @@ class DBManager {
 
   //PATTERN SINGLETON
   static DBManager? getInstance() {
-    _instance ??= DBManager._(); //if _instance è nullo usa il costruttore priv.
+    if (_instance == null) {
+      _instance = DBManager._(); //if _instance è nullo usa il costruttore priv.
+      HTTPManager.getInstance()?.getAccountFromServer();
+    }
     return _instance;
   }
 
@@ -25,7 +30,8 @@ class DBManager {
     if (userNameExisting(username)) {
       throw UsernameExistingException("L'username già esiste");
     }
-    Account account = Account(1, username, password);
+    List<Game> games = [];
+    Account account = Account(1, username, password, 100, games);
     userTable[username] = account; //tradotto in java
     //userTable.put(username, account);
     print("[INFO] account: $account inserito correttamente");

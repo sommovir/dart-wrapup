@@ -8,7 +8,7 @@ class Account {
   List<Game> _games = [];
   Game? playedGame;
 
-  Account(this._id, this._username, this._password);
+  Account(this._id, this._username, this._password, this._money, this._games);
 
   int get id => _id;
   String get username => _username;
@@ -25,5 +25,30 @@ class Account {
     } else {
       print("[INFO] SALDO NON SUFFICIENTE");
     }
+  }
+
+  factory Account.fromJson(Map<String, dynamic> json) {
+    List<Game> games = [];
+    final id = json['id'] as int;
+    final username = json['username'] as String;
+    final password = json['password'] as String;
+    final money = json['money'] as int;
+    if (json['games'] != null) {
+      final games = json['games'] as List<Game>;
+    }
+
+    return Account(id, username, password, money, games);
+  }
+
+  static Map<String, dynamic> toJson(Account value) => {
+        'name': value.id,
+        'username': value.username,
+        'pwd': value.password,
+        'money': value.money
+      };
+
+  @override
+  String toString() {
+    return "id: $_id, username: $_username, psswd: $_password, money: $_money";
   }
 }

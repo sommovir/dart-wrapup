@@ -15,6 +15,7 @@ void main(List<String> arguments) {
   print("                  v.$version");
   print("==========================================");
   print("");
+  DBManager.getInstance();
 
   while (!logged) {
     mainMenu();
