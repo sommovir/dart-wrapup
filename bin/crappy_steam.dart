@@ -24,7 +24,7 @@ void main(List<String> arguments) async{
 
     if (line == "1") {
       try {
-        registration();
+        await registration();
       } catch (e) {
         print("[ERROR] $e");
       }
@@ -129,7 +129,7 @@ void startGame(String username) {
   } while (line != "quit");
 }
 
-void registration() async{
+Future<int> registration() async{
   print("Inserire username: ");
   String? username = stdin.readLineSync();
   final RegExp regex = RegExp("[A-Za-z0-9]+");
@@ -155,6 +155,7 @@ void registration() async{
   }
   int id = await DBManager.getInstance()!.register(username, pass);
   print("[INFO] i dati inseriti sono corretti! L'id del nuovo utente è: $id");
+  return id;
 }
 
 void login() {
