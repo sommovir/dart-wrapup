@@ -5,7 +5,7 @@ import 'package:crappy_steam/crappy_steam.dart' as crappy_steam;
 import 'dart:io';
 import 'package:crappy_steam/logic/GameManager.dart';
 
-import '../lib/logic/DBManager.dart';
+import 'package:crappy_steam/logic/DBManager.dart';
 
 const String version = "0.1";
 bool logged = false;
@@ -32,8 +32,7 @@ void main(List<String> arguments) {
       print("\tCrappy Steam v.$version");
     } else if (line == "status") {
       DBManager.getInstance()!.printStatus();
-    }
-    else if (line == "quit") {
+    } else if (line == "quit") {
       print("[INFO] bye.");
       break;
     } else {
@@ -43,9 +42,7 @@ void main(List<String> arguments) {
   print("programma terminato.. ");
 }
 
-void addGame(int id) {
-
-}
+void addGame(int id) {}
 
 void mainMenu() {
   print(" -- 1) REGISTER");
@@ -74,10 +71,10 @@ void startGame(String username) {
   print(" -- 2) AGGIUNGI UN GIOCO");
   print(" --------------------------");
 
-  String line = stdin.readLineSync() ?? ""; 
+  String line = stdin.readLineSync() ?? "";
 
 //non printa la lista non so why
-  if(line == "1"){
+  if (line == "1") {
     print("Seleziona uno di questi giochi: ");
     for (Game? game in account.games) {
       print("ID: ${game?.getId()} | Titolo: ${game?.getName()}");
@@ -85,19 +82,16 @@ void startGame(String username) {
 
     String selectedId = stdin.readLineSync() ?? "";
 
-    
-
     for (Game game in account.games) {
-      if(game.getId() == selectedId){
+      if (game.getId() == selectedId) {
         var index = account.games.indexOf(game);
         account.setPlayedGame(account.games.elementAt(index));
-        print("Ok stai giocando a (ID: ${account.playedGame?.getId()} | Titolo: ${account.playedGame?.getName()}");
-      } else{
+        print(
+            "Ok stai giocando a (ID: ${account.playedGame?.getId()} | Titolo: ${account.playedGame?.getName()}");
+      } else {
         print("Nessun gioco trovato");
       }
-      
     }
-
   }
 
   // String? line = stdin.readLineSync();

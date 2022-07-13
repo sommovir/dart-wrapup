@@ -1,6 +1,4 @@
-
-
-import '../Game.dart';
+import 'package:crappy_steam/Game.dart';
 
 class Account {
   final int _id;
@@ -9,7 +7,6 @@ class Account {
   int _money = 100;
   List<Game> _games = [];
   Game? playedGame;
-  
 
   Account(this._id, this._username, this._password);
 
