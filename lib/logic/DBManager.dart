@@ -2,9 +2,10 @@ import 'dart:collection';
 
 import 'package:crappy_steam/exceptions/PsswdWrong.dart';
 import 'package:crappy_steam/exceptions/UsernameNotExistingException.dart';
-import 'package:crappy_steam/logic/Account.dart';
 import 'package:crappy_steam/exceptions/UsernameExistingException.dart';
 import 'package:http/http.dart';
+
+import 'Account.dart';
 
 class DBManager {
   static DBManager? _instance; //sperando sia null
