@@ -129,7 +129,7 @@ void startGame(String username) {
   } while (line != "quit");
 }
 
-void registration() {
+void registration() async{
   print("Inserire username: ");
   String? username = stdin.readLineSync();
   final RegExp regex = RegExp("[A-Za-z0-9]+");
@@ -153,8 +153,8 @@ void registration() {
   if (pass != pass2) {
     throw Exception("la password inserita non è uguale alla precedente");
   }
-  DBManager.getInstance()!.register(username, pass);
-  print("[INFO] i dati inseriti sono corretti!");
+  int id = await DBManager.getInstance()!.register(username, pass);
+  print("[INFO] i dati inseriti sono corretti! L'id del nuovo utente è: $id");
 }
 
 void login() {

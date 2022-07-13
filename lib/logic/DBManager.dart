@@ -36,7 +36,7 @@ class DBManager {
 
   bool userNameExisting(String username) => userTable.containsKey(username);
 
-  void register(String username, String password) async {
+  Future<int> register(String username, String password) async {
     if (userNameExisting(username)) {
       throw UsernameExistingException("L'username già esiste");
     }
@@ -67,6 +67,7 @@ class DBManager {
     print(response.statusCode);
 
     print("[INFO] account: $account inserito correttamente");
+    return int.parse(response.body);
   }
 
   String? login(String username, String password) {
