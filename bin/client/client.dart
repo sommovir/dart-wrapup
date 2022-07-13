@@ -3,7 +3,7 @@ import 'package:crappy_steam/logic/Account.dart';
 import 'package:http/http.dart' as http;
 import '../server/person.dart';
 
-> main(List<String> arguments) async {
+ main(List<String> arguments) async {
   final url = Uri.parse('http://lin.java-injection.dev/test/accounts');
 
   //Crea la richiesta http all'url
