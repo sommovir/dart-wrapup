@@ -41,7 +41,7 @@ class Account {
   }
 
   static Map<String, dynamic> toJson(Account value) => {
-        'name': value.id,
+        'id': value.id,
         'username': value.username,
         'pwd': value.password,
         'money': value.money
