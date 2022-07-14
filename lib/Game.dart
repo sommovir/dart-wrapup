@@ -23,4 +23,16 @@ class Game implements Purchasable {
   }
 
   bool get multiplayer => _multiplayer;
+
+  /*factory Game.fromJson(List<dynamic> json) {
+    for(dynamic item in json){
+    final _id = json['id'] as int;
+    final _name = json['name'];
+    final _price = int.parse(['price']);
+    final _multiplayer = json['multiplayer'] as bool;
+    }
+    }
+
+    return Game(price,name,id,multiplayer);
+  }*/
 }

@@ -16,11 +16,12 @@ void main(List<String> arguments) async {
   print("==========================================");
   print("");
   await DBManager.getInstance()!.init();
+  String line = "";
 
-  while (!logged) {
+  do {
     mainMenu();
 
-    String line = stdin.readLineSync() ?? "";
+    line = stdin.readLineSync() ?? "";
 
     if (line == "1") {
       try {
@@ -29,7 +30,7 @@ void main(List<String> arguments) async {
         print("[ERROR] $e");
       }
     } else if (line == "2") {
-      login();
+      await login();
     } else if (line == "3") {
       DBManager.getInstance()!.printUser();
     } else if (line == "cs --version") {
@@ -39,13 +40,19 @@ void main(List<String> arguments) async {
     } else if (line == "size") {
       print(
           "ci sono ${DBManager.getInstance()!.getAccountsSize()} utenti registrati ");
+    } else if (line == "4") {
+      DBManager.getInstance()!.userTable.clear();
+      print("[INFO]Azione effettuata");
+    } else if (line == "5") {
+      DBManager.getInstance()!.userTable.clear();
+      await DBManager.getInstance()?.reload();
     } else if (line == "quit") {
       print("[INFO] bye.");
       break;
     } else {
       print("comando sconosciuto");
     }
-  }
+  } while (line != "quit");
   print("programma terminato.. ");
 }
 
@@ -54,12 +61,15 @@ void addGame(int id) {}
 void mainMenu() {
   print(" -- 1) REGISTER");
   print(" -- 2) LOGIN");
-  print(" -- 3) VISUALIZZA ACCOUNT PRESENTI\n");
+  print(" -- 3) VISUALIZZA ACCOUNT PRESENTI");
+  print(" -- 4) RESET");
+  print(" -- 5) RESET E REINSTALL");
   print(" digita 'quit' per terminare il programma");
   print("-------------------------------------------------");
 }
 
-void startGame(String username) {
+Future<void> startGame(String username) async {
+  await DBManager.getInstance()?.reload();
   Account? account = DBManager.getInstance()?.userTable[username];
   print("I soldi a tua disposizione sono: ${account?.money}");
 
@@ -85,6 +95,7 @@ void startGame(String username) {
     print(" -- 2) AGGIUNGI UN GIOCO");
     print(" -- 3) ELIMINA ACCOUNT");
     print(" -- 4) AGGIUNGI SOLDI");
+    print(" -- 5) VISUALIZZA ACCOUNT PRESENTI");
     print(" -- quit) STOP");
     print(" --------------------------");
     line = stdin.readLineSync() ?? "";
@@ -129,7 +140,7 @@ void startGame(String username) {
       line = stdin.readLineSync() ?? "";
       if (line == "DELETE") {
         print("Account eliminato");
-        DBManager.getInstance()?.deleteAccount(account);
+        await DBManager.getInstance()?.deleteAccount(account);
         break;
       } else {
         print("[INFO] AZIONE ANNULLATA");
@@ -141,8 +152,11 @@ void startGame(String username) {
       if (x <= 0) {
         print("Impossibile inserire la cifra richiesta");
       } else {
-        DBManager.getInstance()!.addMoney(account, x);
+        await DBManager.getInstance()!.addMoney(account, x);
+        await DBManager.getInstance()?.reload();
       }
+    } else if (line == "5") {
+      DBManager.getInstance()!.printUser();
     } else if (line == "status") {
       DBManager.getInstance()!.printStatus();
     } else if (line == "cs --version") {
@@ -182,7 +196,7 @@ Future<int> registration() async {
   return id;
 }
 
-void login() {
+Future<void> login() async {
   print("Inserire username: ");
   String? username = stdin.readLineSync();
   final RegExp regex = RegExp("[A-Za-z0-9]+");
@@ -204,7 +218,7 @@ void login() {
   String? name = DBManager.getInstance()?.login(username, pass);
   print("[INFO] login eseguito correttamente");
   logged = true;
-  startGame(name!);
+  await startGame(name!);
 }
 
 

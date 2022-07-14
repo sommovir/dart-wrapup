@@ -24,6 +24,24 @@ class DBManager {
     });
   }
 
+  Future<void> reload() async {
+    Map<String, Account> user = HashMap();
+
+    await HTTPManager.getInstance()!.getAccountFromServer().then((accounts) {
+      for (var p in accounts) {
+        print("carico\n");
+        try {
+          if (userTable[p.username] != p) userTable[p.username] = p;
+          if (!userTable.containsValue(p)) {
+            userTable[p.username] = p;
+          }
+        } catch (e) {}
+      }
+    });
+
+    for (Account a in userTable.values) {}
+  }
+
   Map<String, Account> userTable = HashMap();
 
   int getAccountsSize() {
@@ -32,6 +50,7 @@ class DBManager {
 
   Future<void> deleteAccount(Account account) async {
     String uri = "http://lin.java-injection.dev/test/accounts/${account.id}";
+    //TODO
   }
 
   void printUser() {
@@ -104,12 +123,16 @@ class DBManager {
 
   Future<void> addMoney(Account account, int money) async {
     Uri uri = Uri.parse(
-        "http://lin.java-injection.dev/test/accounts/${account.id}/addMoney/$money");
+        "https://lin.java-injection.dev/test/accounts/${account.id}/addmoney/$money");
+    print(
+        "URI________________________________-https://lin.java-injection.dev/test/accounts/${account.id}/addmoney/$money");
 
-    final response = await http.patch(uri,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{}));
+    final response = await http
+        .patch(uri,
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, dynamic>{}))
+        .then((value) => print(value.body));
   }
 }

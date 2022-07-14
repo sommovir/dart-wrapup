@@ -35,7 +35,7 @@ class Account {
     final password = json['password'] as String;
     final money = json['money'] as int;
     if (json['games'] != null) {
-      final games = json['games'] as List<Game>;
+      final games = json['games'] as List<dynamic>;
     }
 
     return Account(id, username, password, money, games);
@@ -45,7 +45,8 @@ class Account {
         'id': value.id,
         'username': value.username,
         'pwd': value.password,
-        'money': value.money
+        'money': value.money,
+        'games': value.games
       };
 
   @override
