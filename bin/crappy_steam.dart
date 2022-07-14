@@ -83,6 +83,8 @@ void startGame(String username) {
     print(" RIMANGONO ${account.money} EURO");
     print(" -- 1) SELEZIONA UN GIOCO");
     print(" -- 2) AGGIUNGI UN GIOCO");
+    print(" -- 3) ELIMINA ACCOUNT");
+    print(" -- 4) AGGIUNGI SOLDI");
     print(" -- quit) STOP");
     print(" --------------------------");
     line = stdin.readLineSync() ?? "";
@@ -122,17 +124,36 @@ void startGame(String username) {
           account.buyGames(x.getPrice(), account, game);
         }
       }
-    } else if (line == "cs --version") {
-      print("\tCrappy Steam v.$version");
+    } else if (line == "3") {
+      print("DIGITARE 'DELETE' PER CONFERMARE LA CANCELLAZIONE");
+      line = stdin.readLineSync() ?? "";
+      if (line == "DELETE") {
+        print("Account eliminato");
+        DBManager.getInstance()?.deleteAccount(account);
+        break;
+      } else {
+        print("[INFO] AZIONE ANNULLATA");
+      }
+    } else if (line == "4") {
+      print("Quanto vuoi aggiungere?");
+      String line = stdin.readLineSync() ?? "";
+      int x = int.parse(line);
+      if (x <= 0) {
+        print("Impossibile inserire la cifra richiesta");
+      } else {
+        DBManager.getInstance()!.addMoney(account, x);
+      }
     } else if (line == "status") {
       DBManager.getInstance()!.printStatus();
+    } else if (line == "cs --version") {
+      print("\tCrappy Steam v.$version");
     } else {
       print("comando sconosciuto");
     }
   } while (line != "quit");
 }
 
-Future<int> registration() async{
+Future<int> registration() async {
   print("Inserire username: ");
   String? username = stdin.readLineSync();
   final RegExp regex = RegExp("[A-Za-z0-9]+");

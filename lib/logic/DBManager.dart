@@ -30,6 +30,10 @@ class DBManager {
     return userTable.length;
   }
 
+  Future<void> deleteAccount(Account account) async {
+    String uri = "http://lin.java-injection.dev/test/accounts/${account.id}";
+  }
+
   void printUser() {
     String x = "";
     for (var p in userTable.values) {
@@ -50,7 +54,7 @@ class DBManager {
     }
     List<Game> games = [];
     Account account = Account(1, username, password, 100, games);
-    userTable[username] = account; //tradotto in java
+    //tradotto in java
     //userTable.put(username, account);
     final jsonText = jsonEncode({"Account": account},
         toEncodable: (Object? value) => value is Account
@@ -75,6 +79,9 @@ class DBManager {
     print(response.statusCode);
 
     print("[INFO] account: $account inserito correttamente");
+    int id = int.parse(response.body);
+    account.setId(id);
+    userTable[username] = account;
     return int.parse(response.body);
   }
 
@@ -93,5 +100,16 @@ class DBManager {
 
   void printStatus() {
     print("server online");
+  }
+
+  Future<void> addMoney(Account account, int money) async {
+    Uri uri = Uri.parse(
+        "http://lin.java-injection.dev/test/accounts/${account.id}/addMoney/$money");
+
+    final response = await http.patch(uri,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{}));
   }
 }
