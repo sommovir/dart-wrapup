@@ -3,7 +3,7 @@ import 'package:crappy_steam/Purchasable.dart';
 class Game implements Purchasable {
   final int _price;
   final String _name;
-  final String _id;
+  final int _id;
   final bool _multiplayer;
 
   Game(this._price, this._name, this._id, this._multiplayer);
@@ -18,21 +18,23 @@ class Game implements Purchasable {
     return _name;
   }
 
-  String getId() {
+  int getId() {
     return _id;
   }
 
   bool get multiplayer => _multiplayer;
 
-  /*factory Game.fromJson(List<dynamic> json) {
-    for(dynamic item in json){
-    final _id = json['id'] as int;
-    final _name = json['name'];
-    final _price = int.parse(['price']);
-    final _multiplayer = json['multiplayer'] as bool;
-    }
+  factory Game.fromJson(Map<String, dynamic> json) {
+    final id = json['id'] as int;
+    final name = json['name'];
+    final price = json['price'] as int;
+    final multiplayer = json['multiplayer'] as bool;
+    return Game(price,name,id,multiplayer);
+
     }
 
-    return Game(price,name,id,multiplayer);
-  }*/
+  @override
+  String toString() {
+    return 'Game{_price: $_price, _name: $_name, _id: $_id, _multiplayer: $_multiplayer}';
+  }
 }

@@ -34,8 +34,13 @@ class Account {
     final username = json['username'] as String;
     final password = json['password'] as String;
     final money = json['money'] as int;
+
+
     if (json['games'] != null) {
-      final games = json['games'] as List<dynamic>;
+      final jsonGames = json['games'] as List<dynamic>;
+      for(var jsonGame in jsonGames ){
+         games.add(Game.fromJson(jsonGame));
+      }
     }
 
     return Account(id, username, password, money, games);
@@ -49,8 +54,18 @@ class Account {
         'games': value.games
       };
 
+
+  String toGamesString(){
+    String s_games="";
+    for(Game g in games){
+      s_games+=(g.toString()+"\n");
+    }
+    s_games+="--------------------";
+    return s_games;
+  }
+
   @override
   String toString() {
-    return "id: $_id, username: $_username, psswd: $_password, money: $_money";
+    return "id: $_id, username: $_username, psswd: $_password, money: $_money" + " " + toGamesString();
   }
 }
