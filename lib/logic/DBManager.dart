@@ -30,6 +30,14 @@ class DBManager {
     return userTable.length;
   }
 
+  void printUser() {
+    String x = "";
+    for (var p in userTable.values) {
+      x += "${p.toString()}\n";
+    }
+    print(x);
+  }
+
   //PATTERN SINGLETON
   static DBManager? getInstance() => _instance ??=
       DBManager._(); //if _instance è nullo usa il costruttore priv.
