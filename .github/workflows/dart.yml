@@ -40,7 +40,6 @@ jobs:
       # want to change this to 'flutter test'.
       - name: Run tests
         run: dart test
-      - name: Upload coverage to Codecov
       - uses: actions/checkout@master
       - uses: codecov/codecov-action@v3
         with:
